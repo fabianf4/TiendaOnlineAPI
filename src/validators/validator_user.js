@@ -31,4 +31,18 @@ const validateCreate = [
     }
 ]
 
-module.exports = validateCreate
+const validateDelete = [
+    check('uuid')
+        .exists().withMessage('Debe escribir un uuid valido')
+        .trim()
+        .escape(),
+    (req,res,next) => {
+        try{
+            validationResult(req).throw()
+            next()
+        }catch(err){
+            res.status(400).json({errors : err.array()})
+        }
+    }
+]
+module.exports = {validateCreate,validateDelete}

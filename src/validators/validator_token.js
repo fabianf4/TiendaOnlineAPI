@@ -10,7 +10,7 @@ const validateToken = [
             try{
                 jwt.verify(token,secret,(err,decoded)=>{
                     if (err) throw err
-                    console.log(decoded)
+                    //console.log(decoded)
                 })
                 next()
             }catch(err){

@@ -30,7 +30,6 @@ const controll_user = {
         }
 
     },
-
     addUser: async (req, res) => {
         try {
             //Generate UUID
@@ -39,14 +38,23 @@ const controll_user = {
 
             const passwordHash = await encrypt(password)
 
-            await user_crud.addUser(uuid, name, lastName, userName, email, passwordHash)
+            await user_crud.addUser(uuid, name, lastName, userName, email, passwordHash,(err)=>{
 
-            return res.status(200).json({
-                name,
-                lastName,
-                userName,
-                email,
-                password: true
+                if (err){
+                    return res.status(500).json({
+                        eror: 'El nombre de usuario no esta disponible'
+                    })
+                }else {
+                    return res.status(200).json({
+                        name,
+                        lastName,
+                        userName,
+                        email,
+                        password: true,
+                        results: 'Se registro el usuario'
+                    })
+                }
+                
             })
         } catch (error) {
             res.status(500).json(error)
@@ -58,7 +66,7 @@ const controll_user = {
 
             user_crud.findUserForUserName(userName, async (result) => {
 
-                if (result[0]) {
+                if (result) {
 
                     const hashPassword = result[0].password
 
@@ -80,6 +88,28 @@ const controll_user = {
                 })
             })
         } catch (error) {
+            res.status(500).json(error)
+        }
+    },
+    deleteUser : async (req,res)=>{
+        try{
+
+            const {uuid} = req.body
+            
+            user_crud.deleteUserforUuid(uuid,(results)=>{
+                if(results.affectedRows > 0){
+                    return res.status(200).json({
+                        "status": `Se elimino el usuarion con el uuid ${uuid}`
+                    })
+                }else{
+                    return res.status(200).json({
+                        "status": "No se elimino ningun usuario"
+                    })
+                }
+            })
+
+            
+        }catch(err){
             res.status(500).json(error)
         }
     }
