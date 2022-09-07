@@ -4,11 +4,13 @@ const validateCreate = [
     check('name')
         .exists().withMessage('Debe escribir un nombre')
         .trim()
-        .escape(),
+        .escape()
+        .isString(),
     check('lastName')
         .exists().withMessage('Debe escribir un apellido')
         .trim()
-        .escape(),
+        .escape()
+        .isString(),
     check('userName')
         .exists().withMessage('Debe escribir un nombre de usuario')
         .trim()
@@ -20,7 +22,8 @@ const validateCreate = [
     check('password')
         .exists().withMessage('Debe escribir una contraseña')
         .trim()
-        .escape(),
+        .escape()
+        .isString(),
     (req,res,next) => {
         try{
             validationResult(req).throw()
@@ -45,4 +48,20 @@ const validateDelete = [
         }
     }
 ]
-module.exports = {validateCreate,validateDelete}
+
+const validateId = [
+    check('id')
+        .exists().withMessage('Debe escribir un id valido')
+        .trim()
+        .escape()
+        .isNumeric(),
+    (req,res,next) => {
+        try{
+            validationResult(req).throw()
+            next()
+        }catch(err){
+            res.status(400).json({errors : err.array()})
+        }
+    }
+]
+module.exports = {validateCreate,validateDelete,validateId}

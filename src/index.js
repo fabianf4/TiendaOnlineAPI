@@ -11,6 +11,7 @@ app.use(express.json())
 
 //routers
 app.use('/user',require('./routers/user'))
+app.use('/products',require('./routers/products'))
 
 app.listen(PORT,()=>{
     console.log(`Api initialized on port ${PORT}`)

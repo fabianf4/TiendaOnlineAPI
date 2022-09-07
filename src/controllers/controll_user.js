@@ -51,7 +51,7 @@ const controll_user = {
                         userName,
                         email,
                         password: true,
-                        results: 'Se registro el usuario'
+                        status: 'Se registro el usuario'
                     })
                 }
                 
@@ -74,7 +74,10 @@ const controll_user = {
 
                         const token = jwt.sign({
                             exp: Math.floor(Date.now() / 1000) + (60 * 60),
-                            data: result[0].uuid
+                            data: {
+                                uuid : result[0].uuid,
+                                rol: result[0].rol
+                            }
                         }, secret)
 
                         return res.status(200).json({
@@ -93,7 +96,6 @@ const controll_user = {
     },
     deleteUser : async (req,res)=>{
         try{
-
             const {uuid} = req.body
             
             user_crud.deleteUserforUuid(uuid,(results)=>{
@@ -110,6 +112,45 @@ const controll_user = {
 
             
         }catch(err){
+            res.status(500).json(error)
+        }
+    },
+    addProductInCar: async (req,res)=>{
+        try {
+            const id = req.body.id
+            const uuid = req.uuid
+
+            user_crud.addProductInCar(uuid,id,(results)=>{
+                if(results){
+                    res.status(200).json({
+                        status: "Se agrego el producto al carro"
+                    })
+                }else{
+                    res.status(200).json({
+                        status: "No se agrego el producto al carro"
+                    })
+                }
+            })  
+        } catch (err) {
+            res.status(500).json(error)
+        }
+    },
+    deleteProductsFromCar: async (req,res)=>{
+        try {
+            const uuid = req.uuid
+
+            user_crud.deleteAllProductsFromCar(uuid,(results)=>{
+                if(results.affectedRows>0){
+                    res.status(200).json({
+                        status: "Se eliminaron los productos del carro"
+                    })
+                }else{
+                    res.status(200).json({
+                        status: "No se eliminaron los productos del carro"
+                    })
+                }
+            })  
+        } catch (err) {
             res.status(500).json(error)
         }
     }

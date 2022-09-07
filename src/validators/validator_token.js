@@ -10,12 +10,15 @@ const validateToken = [
             try{
                 jwt.verify(token,secret,(err,decoded)=>{
                     if (err) throw err
-                    //console.log(decoded)
+                    req.rol = decoded.data.rol
+                    req.uuid = decoded.data.uuid
                 })
                 next()
             }catch(err){
-                res.status(403).json({
-                    err
+
+                return res.status(403).json({
+                    err,
+                    in: "jwt"
                 })
             }
         }else{
