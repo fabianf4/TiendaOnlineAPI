@@ -2,7 +2,7 @@ const user_crud = require('../models/user_crud')
 
 const { v4: uuidv4 } = require('uuid')
 
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 const saltRounds = parseInt(process.env.SALT_ROUNDS)
 
 const jwt = require('jsonwebtoken')
