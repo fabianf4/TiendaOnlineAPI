@@ -82,6 +82,7 @@ const controll_user = {
 
                         return res.status(200).json({
                             "login": true,
+                            rol: result[0].rol,
                             token
                         })
                     }
