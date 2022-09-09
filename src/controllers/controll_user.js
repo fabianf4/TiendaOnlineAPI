@@ -25,8 +25,8 @@ const controll_user = {
             user_crud.getAllUsers((results) => {
                 res.status(200).json({ results })
             })
-        } catch (error) {
-            res.status(500).json(error)
+        } catch (err) {
+            res.status(500).json(err)
         }
 
     },
@@ -56,8 +56,8 @@ const controll_user = {
                 }
                 
             })
-        } catch (error) {
-            res.status(500).json(error)
+        } catch (err) {
+            res.status(500).json(err)
         }
     },
     findUserForUserName: async (req, res) => {
@@ -97,6 +97,10 @@ const controll_user = {
     deleteUser : async (req,res)=>{
         try{
             const {uuid} = req.body
+
+            if(uuid == '24889e79-e7de-468a-abfb-7066d0bbacd7'){
+                throw 'Error, no se puede eliminar el usuario administrador'
+            }
             
             user_crud.deleteUserforUuid(uuid,(results)=>{
                 if(results.affectedRows > 0){
@@ -108,11 +112,9 @@ const controll_user = {
                         "status": "No se elimino ningun usuario"
                     })
                 }
-            })
-
-            
+            })            
         }catch(err){
-            res.status(500).json(error)
+            res.status(500).json(err)
         }
     },
     addProductInCar: async (req,res)=>{
@@ -132,7 +134,7 @@ const controll_user = {
                 }
             })  
         } catch (err) {
-            res.status(500).json(error)
+            res.status(500).json(err)
         }
     },
     deleteProductsFromCar: async (req,res)=>{
@@ -151,7 +153,7 @@ const controll_user = {
                 }
             })  
         } catch (err) {
-            res.status(500).json(error)
+            res.status(500).json(err)
         }
     }
 }
