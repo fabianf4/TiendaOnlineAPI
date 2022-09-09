@@ -4,7 +4,7 @@ const productsCrud = {
     getProducts: (callback) => {
         connection.query(`select * from products`,
             (error, results) => {
-                if (error) throw error
+                if (error) console.log(err)
                 callback(results)
             })
     },
@@ -12,12 +12,12 @@ const productsCrud = {
 
         connection.query(`select max(id) as finalId from products`,
             (err, results) => {
-                if (err) throw err
+                if (err) console.log(err)
                 let id = results[0].finalId + 1
 
                 connection.query(`insert into products values (${id},"${name}",${price},${amount},"${imgUrl}")`,
                     (err, results) => {
-                        if (err) throw err
+                        if (err) console.log(err)
                         callback(id)
                     })
             })
@@ -27,7 +27,7 @@ const productsCrud = {
     deleteProductForId: (id, callback) => {
         connection.query(`delete from products where id = ${id}`,
         (err,results)=>{
-            if (err) throw err
+            if (err) console.log(err)
             callback(results)
         })
     }

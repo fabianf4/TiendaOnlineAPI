@@ -39,7 +39,7 @@ const userCrud = {
     deleteUserforUuid: async (uuid,callback)=>{
         connection.query(`delete from users where uuid="${uuid}"`,
         (err,results)=>{
-            if (err) throw error
+            if (err) console.log(err)
 
             callback(results)
         })

@@ -19,7 +19,8 @@ const validateCreate = [
     check('imgUrl')
         .exists().withMessage('Debe ingresar una url valida')
         .trim()
-        .isString(),
+        .isString()
+        .isURL().withMessage('No es una url valida'),
     (req,res,next) => {
         try{
             validationResult(req).throw()
