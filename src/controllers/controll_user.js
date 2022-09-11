@@ -156,6 +156,25 @@ const controll_user = {
         } catch (err) {
             res.status(500).json(err)
         }
+    },
+    getProductsFromCar: async (req,res)=>{
+        try {
+            const uuid = req.uuid
+
+            user_crud.getProductsFromCar(uuid,(results)=>{
+                if(results){
+                    res.status(200).json({
+                        results
+                    })
+                }else{
+                    res.status(200).json({
+                        status: "No hay productos en el carro"
+                    })
+                }
+            })  
+        } catch (err) {
+            res.status(500).json(err)
+        }
     }
 }
 

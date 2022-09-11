@@ -57,6 +57,13 @@ const userCrud = {
             if (err) console.log(err)
             callback(results)
         })
+    },
+    getProductsFromCar: async (uuid, callback) => {
+        connection.query(`select products.* from users join usersProducts on uuid = uuidUsers join products on id = idProducts where users.uuid = "${uuid}"`,
+        (err,results)=>{
+            if (err) console.log(err)
+            callback(results)
+        })
     }
 }
 

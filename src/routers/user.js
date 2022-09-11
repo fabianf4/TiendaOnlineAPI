@@ -19,4 +19,6 @@ router.post('/car', validate_token, validateId, conUser.addProductInCar)
 
 router.delete('/carDelete',validate_token,conUser.deleteProductsFromCar)
 
+router.get('/getProducts',validate_token, conUser.getProductsFromCar)
+
 module.exports = router
